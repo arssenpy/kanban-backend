@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { listService } from "../services/list.service";
+import { asyncHandler } from "../middlewares/asyncHandler";
 
-export const getLists = async (req: Request, res: Response) => {
+export const getLists = asyncHandler(async (req: Request, res: Response) => {
   const { boardId } = req.query;
 
   if (!boardId || typeof boardId !== "string") {
@@ -10,9 +11,9 @@ export const getLists = async (req: Request, res: Response) => {
 
   const lists = await listService.getByBoard(boardId);
   res.json(lists);
-};
+});
 
-export const createList = async (req: Request, res: Response) => {
+export const createList = asyncHandler(async (req: Request, res: Response) => {
   const { title, boardId, order } = req.body;
 
   if (!title || !boardId) {
@@ -21,9 +22,9 @@ export const createList = async (req: Request, res: Response) => {
 
   const list = await listService.create(title, boardId, order ?? 0);
   res.status(201).json(list);
-};
+});
 
-export const reorderList = async (req: Request, res: Response) => {
+export const reorderList = asyncHandler(async (req: Request, res: Response) => {
   const payload = req.body;
 
   if (!Array.isArray(payload)) {
@@ -32,4 +33,4 @@ export const reorderList = async (req: Request, res: Response) => {
 
   await listService.reorder(payload);
   res.status(200).json({ success: true });
-};
+});

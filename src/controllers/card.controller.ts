@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { cardService } from "../services/card.service";
+import { asyncHandler } from "../middlewares/asyncHandler";
 
-export const getCards = async (req: Request, res: Response) => {
+export const getCards = asyncHandler(async (req: Request, res: Response) => {
   const { listId } = req.query;
 
   if (!listId || typeof listId !== "string") {
@@ -10,9 +11,9 @@ export const getCards = async (req: Request, res: Response) => {
 
   const cards = await cardService.getByList(listId);
   res.json(cards);
-};
+});
 
-export const createCard = async (req: Request, res: Response) => {
+export const createCard = asyncHandler(async (req: Request, res: Response) => {
   const { title, listId, order } = req.body;
 
   if (!title || !listId) {
@@ -21,15 +22,17 @@ export const createCard = async (req: Request, res: Response) => {
 
   const card = await cardService.create(title, listId, order ?? 0);
   res.status(201).json(card);
-};
+});
 
-export const reorderCards = async (req: Request, res: Response) => {
-  const payload = req.body;
+export const reorderCards = asyncHandler(
+  async (req: Request, res: Response) => {
+    const payload = req.body;
 
-  if (!Array.isArray(payload)) {
-    return res.status(400).json({ error: "payload must be array" });
-  }
+    if (!Array.isArray(payload)) {
+      return res.status(400).json({ error: "payload must be array" });
+    }
 
-  await cardService.reorder(payload);
-  res.status(200).json({ success: true });
-};
+    await cardService.reorder(payload);
+    res.status(200).json({ success: true });
+  },
+);

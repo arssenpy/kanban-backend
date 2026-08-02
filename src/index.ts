@@ -6,6 +6,9 @@ import boardRoutes from "./routes/board.routes";
 import listRoutes from "./routes/list.routes";
 import cardRoutes from "./routes/card.routes";
 
+import { notFoundMiddleware } from "./middlewares/notFound.middleware";
+import { errorMiddleware } from "./middlewares/error.middleware";
+
 const app = express();
 const PORT = 5000;
 
@@ -16,6 +19,9 @@ app.use("/", healthRoutes);
 app.use("/api/boards", boardRoutes);
 app.use("/api/lists", listRoutes);
 app.use("/api/cards", cardRoutes);
+
+app.use(notFoundMiddleware);
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`server is running on ${PORT}`);
