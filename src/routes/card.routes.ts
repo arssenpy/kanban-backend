@@ -1,4 +1,10 @@
 import { Router } from "express";
+import { validate } from "../middlewares/validate.middleware";
+import {
+  createCardSchema,
+  getCardsQuerySchema,
+  reorderCardsSchema,
+} from "../validators/card.validator";
 import {
   getCards,
   createCard,
@@ -7,8 +13,8 @@ import {
 
 const router = Router();
 
-router.get("/", getCards);
-router.post("/", createCard);
-router.patch("/reorder", reorderCards);
+router.get("/", validate(getCardsQuerySchema, "query"), getCards);
+router.post("/", validate(createCardSchema), createCard);
+router.patch("/reorder", validate(reorderCardsSchema), reorderCards);
 
 export default router;
