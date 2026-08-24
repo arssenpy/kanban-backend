@@ -6,9 +6,20 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String?
+  boards    Board[]
+  createdAt DateTime @default(now())
+}
+
 model Board {
   id        String   @id @default(uuid())
   title     String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
   lists     List[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
