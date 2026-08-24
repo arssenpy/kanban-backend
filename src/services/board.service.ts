@@ -1,10 +1,13 @@
 import { prisma } from "../config/prisma";
 
 export const boardService = {
-  getAll: () => {
-    return prisma.board.findMany({ orderBy: { createdAt: "asc" } });
+  getAllForUser: (userId: string) => {
+    return prisma.board.findMany({
+      where: { userId },
+      orderBy: { createdAt: "asc" },
+    });
   },
-  create: (title: string) => {
-    return prisma.board.create({ data: { title } });
+  create: (title: string, userId: string) => {
+    return prisma.board.create({ data: { title, userId } });
   },
 };
