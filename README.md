@@ -3,7 +3,7 @@
 REST API for a Kanban application with boards, lists, and cards. Supports drag-and-drop reordering, JWT authentication, and per-user data isolation.
 
 **Live API:** [kanban-backend-production-7623.up.railway.app]
-**Frontend repository:** [https://github.com/arssenpy/kanban-frontend]
+**Frontend repository:** [[frontend repo link](https://github.com/arssenpy/kanban-frontend)]
 
 ![Demo](docs/DnDGIF.gif)
 
