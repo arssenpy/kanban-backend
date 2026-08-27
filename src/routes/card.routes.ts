@@ -9,6 +9,7 @@ import {
   getCards,
   createCard,
   reorderCards,
+  deleteCard,
 } from "../controllers/card.controller";
 
 const router = Router();
@@ -16,5 +17,6 @@ const router = Router();
 router.get("/", validate(getCardsQuerySchema, "query"), getCards);
 router.post("/", validate(createCardSchema), createCard);
 router.patch("/reorder", validate(reorderCardsSchema), reorderCards);
+router.delete("/:id", deleteCard);
 
 export default router;

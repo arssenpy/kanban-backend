@@ -23,3 +23,9 @@ export const reorderList = asyncHandler(async (req: Request, res: Response) => {
   await listService.reorder(req.body, req.userId as string);
   res.status(200).json({ success: true });
 });
+
+export const deleteList = asyncHandler(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  await listService.remove(id as string, req.userId as string);
+  res.status(204).send();
+});

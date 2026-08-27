@@ -1,0 +1,40 @@
+@baseUrl = https://kanban-backend-production-7623.up.railway.app
+
+###
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "tonisoprano@gmail.com",
+  "password": "yatoni123",
+  "name": "Toni"
+}
+
+###
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "tonisoprano@gmail.com",
+  "password": "yatoni123",
+}
+
+###
+@authToken = {{login.response.body.token}}
+
+###
+GET {{baseUrl}}/api/boards
+Authorization: Bearer {{authToken}}
+
+###
+POST https://kanban-backend-production-7623.up.railway.app/api/boards
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "title": "zxc"
+}
+###
+DELETE {{baseUrl}}/api/boards/6790c0c7-2ef9-4ffd-a5ab-afa019053a54
+Authorization: Bearer {{authToken}}

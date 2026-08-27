@@ -25,3 +25,9 @@ export const reorderCards = asyncHandler(
     res.status(200).json({ success: true });
   },
 );
+
+export const deleteCard = asyncHandler(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  await cardService.remove(id as string, req.userId as string);
+  res.status(204).send();
+});

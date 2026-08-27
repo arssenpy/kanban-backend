@@ -9,6 +9,7 @@ import {
   getLists,
   createList,
   reorderList,
+  deleteList,
 } from "../controllers/list.controller";
 
 const router = Router();
@@ -16,5 +17,6 @@ const router = Router();
 router.get("/", validate(getListsQuerySchema, "query"), getLists);
 router.post("/", validate(createListSchema), createList);
 router.patch("/reorder", validate(reorderListsSchema), reorderList);
+router.delete("/:id", deleteList);
 
 export default router;

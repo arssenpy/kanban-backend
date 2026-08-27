@@ -59,4 +59,17 @@ export const cardService = {
       ),
     );
   },
+
+  remove: async (cardId: string, userId: string) => {
+    const card = await prisma.card.findFirst({
+      where: { id: cardId },
+      include: { list: { include: { board: true } } },
+    });
+
+    if (!card || card.list.board.userId !== userId) {
+      throw new AppError("Card not found", 404);
+    }
+
+    await prisma.card.delete({ where: { id: cardId } });
+  },
 };

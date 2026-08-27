@@ -12,3 +12,9 @@ export const createBoard = asyncHandler(async (req: Request, res: Response) => {
   const board = await boardService.create(title, req.userId as string);
   res.status(201).json(board);
 });
+
+export const deleteBoard = asyncHandler(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  await boardService.remove(id as string, req.userId as string);
+  res.status(204).send();
+});

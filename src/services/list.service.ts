@@ -51,4 +51,17 @@ export const listService = {
       ),
     );
   },
+
+  remove: async (listId: string, userId: string) => {
+    const list = await prisma.list.findFirst({
+      where: { id: listId },
+      include: { board: true },
+    });
+
+    if (!list || list.board.userId !== userId) {
+      throw new AppError("List not found", 404);
+    }
+
+    await prisma.list.delete({ where: { id: listId } });
+  },
 };
