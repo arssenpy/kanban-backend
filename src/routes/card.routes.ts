@@ -11,8 +11,11 @@ import {
   reorderCards,
   deleteCard,
 } from "../controllers/card.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();
+
+router.use(authMiddleware);
 
 router.get("/", validate(getCardsQuerySchema, "query"), getCards);
 router.post("/", validate(createCardSchema), createCard);

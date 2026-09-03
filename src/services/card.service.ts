@@ -61,9 +61,13 @@ export const cardService = {
   },
 
   remove: async (cardId: string, userId: string) => {
+    if (!userId) {
+      throw new AppError("Unauthorized", 401);
+    }
+
     const card = await prisma.card.findFirst({
       where: { id: cardId },
-      include: { list: { include: { board: true } } },
+      include: { list: { include: { board: { select: { userId: true } } } } },
     });
 
     if (!card || card.list.board.userId !== userId) {

@@ -53,9 +53,13 @@ export const listService = {
   },
 
   remove: async (listId: string, userId: string) => {
+    if (!userId) {
+      throw new AppError("Unauthorized", 401);
+    }
+
     const list = await prisma.list.findFirst({
       where: { id: listId },
-      include: { board: true },
+      include: { board: { select: { userId: true } } },
     });
 
     if (!list || list.board.userId !== userId) {

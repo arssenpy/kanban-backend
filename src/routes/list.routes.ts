@@ -11,8 +11,11 @@ import {
   reorderList,
   deleteList,
 } from "../controllers/list.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();
+
+router.use(authMiddleware);
 
 router.get("/", validate(getListsQuerySchema, "query"), getLists);
 router.post("/", validate(createListSchema), createList);
